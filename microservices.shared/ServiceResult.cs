@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Refit;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails;
 
 namespace microservices.shared
 {
@@ -34,9 +36,91 @@ namespace microservices.shared
             };
         }
 
+        //Error methods
+        public static ServiceResult Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
+        {
+            return new ServiceResult
+            {
+                StatusCode = statusCode,
+                Fail = problemDetails
+            };
+        }
+
+        public static ServiceResult Error(string title, HttpStatusCode statusCode)
+        {
+            return new ServiceResult
+            {
+                StatusCode = statusCode,
+
+                //burada tekrar statuscode'u almamızın sebebi bir hata olduğunda sadece buradaki fail nesnesini döneceğimiz için elimizde statuscode olmayacak.
+                Fail = new ProblemDetails()
+                {
+                    Title = title,
+                    Status = statusCode.GetHashCode()
+                }
+            };
+        }
+
+        public static ServiceResult Error(string title, string description, HttpStatusCode statusCode)
+        {
+            return new ServiceResult
+            {
+                StatusCode = statusCode,
+
+                //burada tekrar statuscode'u almamızın sebebi bir hata olduğunda sadece buradaki fail nesnesini döneceğimiz için elimizde statuscode olmayacak.
+                Fail = new ProblemDetails()
+                {
+                    Title = title,
+                    Detail = description,
+                    Status = statusCode.GetHashCode()
+                }
+            };
+        }
+
+        public static ServiceResult ErrorFromProblemDetails(Refit.ApiException apiException)
+        {
+            if (string.IsNullOrEmpty(apiException.Content))
+            {
+                return new ServiceResult
+                {
+                    Fail = new ProblemDetails()
+                    {
+                        Title = apiException.Message
+                    },
+                    StatusCode = apiException.StatusCode
+                };
+            }
+
+            var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(apiException.Content, new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            return new ServiceResult
+            {
+                Fail = problemDetails,
+                StatusCode = apiException.StatusCode
+            };
+        }
+        public static ServiceResult ErrorFromValidation(IDictionary<string, object?> errors)
+        {
+            return new ServiceResult
+            {
+                StatusCode = HttpStatusCode.BadRequest,
+                Fail = new ProblemDetails()
+                {
+                    Title = "Validation error/errors occured",
+                    Detail = "Please check the errors.",
+                    Extensions = { { "ValidationErrors", errors } },
+                    Status = (int)HttpStatusCode.BadRequest.GetHashCode()
+                }
+            };
+        }
 
     }
 
+    //buradaki new'lerin sebebi: polimorfizmden kaçınmak (virtual override).
+    //ServiceResult<T> oluşutursam alttakiler ServiceResult oluşturursam üsttekiler çalışır.
     public class ServiceResult<T> : ServiceResult
     {
         public T? Data { get; set; }
@@ -57,7 +141,7 @@ namespace microservices.shared
         }
 
         //201 => Created => response body header => location == api/products/5
-        public static ServiceResult<T> SuccessAsOK(T data, string url)
+        public static ServiceResult<T> SuccessAsCreated(T data, string url)
         {
             return new ServiceResult<T>
             {
@@ -67,7 +151,47 @@ namespace microservices.shared
             };
         }
 
-        public static ServiceResult<T> ErrorFromProblemDetails(Refit.ApiException apiException)
+        public new static ServiceResult<T> Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
+        {
+            return new ServiceResult<T>
+            {
+                StatusCode = statusCode,
+                Fail = problemDetails
+            };
+        }
+
+        public new static ServiceResult<T> Error(string title, HttpStatusCode statusCode)
+        {
+            return new ServiceResult<T>
+            {
+                StatusCode = statusCode,
+
+                //burada tekrar statuscode'u almamızın sebebi bir hata olduğunda sadece buradaki fail nesnesini döneceğimiz için elimizde statuscode olmayacak.
+                Fail = new ProblemDetails()
+                {
+                    Title = title,
+                    Status = statusCode.GetHashCode()
+                }
+            };
+        }
+
+        public new static ServiceResult<T> Error(string title, string description, HttpStatusCode statusCode)
+        {
+            return new ServiceResult<T>
+            {
+                StatusCode = statusCode,
+
+                //burada tekrar statuscode'u almamızın sebebi bir hata olduğunda sadece buradaki fail nesnesini döneceğimiz için elimizde statuscode olmayacak.
+                Fail = new ProblemDetails()
+                {
+                    Title = title,
+                    Detail = description,
+                    Status = statusCode.GetHashCode()
+                }
+            };
+        }
+
+        public new static ServiceResult<T> ErrorFromProblemDetails(ApiException apiException)
         {
             if (string.IsNullOrEmpty(apiException.Content))
             {
@@ -92,25 +216,17 @@ namespace microservices.shared
                 StatusCode = apiException.StatusCode
             };
         }
-
-        public static ServiceResult<T> Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
+        public new static ServiceResult<T> ErrorFromValidation(IDictionary<string,object?> errors)
         {
             return new ServiceResult<T>
             {
-                StatusCode = statusCode,
-                Fail = problemDetails
-            };
-        }
-
-        public static ServiceResult<T> ErrorAsNotFound()
-        {
-            return new ServiceResult<T>
-            {
-                StatusCode = HttpStatusCode.NotFound,
-                Fail = new ProblemDetails
+                StatusCode = HttpStatusCode.BadRequest,
+                Fail = new ProblemDetails()
                 {
-                    Title = "Not Found",
-                    Detail = "The requested source was not found"
+                    Title = "Validation error/errors occured",
+                    Detail = "Please check the errors.",
+                    Extensions = { { "ValidationErrors", errors } },
+                    Status = (int)HttpStatusCode.BadRequest.GetHashCode()
                 }
             };
         }
