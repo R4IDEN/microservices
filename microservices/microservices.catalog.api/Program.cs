@@ -1,10 +1,13 @@
-﻿using microservices.catalog.api.Options;
+﻿using microservices.catalog.api;
+using microservices.catalog.api.Features.Categories;
+using microservices.catalog.api.Options;
 using microservices.catalog.api.Repositories;
+using microservices.shared.Extensions;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -27,15 +30,22 @@ builder.Services.AddScoped<AppDbContext>(sp =>
     return AppDbContext.Create(mongoClient.GetDatabase(options.DatabaseName));
 });
 
+//common service extension
+builder.Services.AddCommonServiceExt(typeof(CatalogAssembly));
 
 
 
 
 
-
+//app Create
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//category endpoint
+app.AddCategoryGroupEndpointExt();
+
+
+
+//configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
