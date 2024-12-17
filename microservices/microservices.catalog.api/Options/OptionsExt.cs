@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using microservices.catalog.api.Options;
+using Microsoft.Extensions.Options;
+using ZstdSharp.Unsafe;
 
 namespace microservices.catalog.api.Options
 {
@@ -12,8 +14,8 @@ namespace microservices.catalog.api.Options
                 .ValidateOnStart();
             
             _services.AddSingleton<MongoOption>(sp => sp.GetRequiredService<IOptions<MongoOption>>().Value);
-
             return _services;
         }
     }
 }
+

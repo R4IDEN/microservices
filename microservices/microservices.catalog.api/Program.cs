@@ -3,6 +3,7 @@ using microservices.catalog.api.Features.Categories;
 using microservices.catalog.api.Options;
 using microservices.catalog.api.Repositories;
 using microservices.shared.Extensions;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
     var options = sp.GetRequiredService<MongoOption>();
     return new MongoClient(options.ConnectionString);
 });
+
 
 //mongo db'ye her bağlanılmak istendiğinde yeni bir appDb gönderilecek.
 builder.Services.AddScoped<AppDbContext>(sp =>

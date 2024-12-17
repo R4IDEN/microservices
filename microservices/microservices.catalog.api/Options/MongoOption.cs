@@ -1,8 +1,10 @@
-﻿namespace microservices.catalog.api.Options
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace microservices.catalog.api.Options
 {
     public class MongoOption
     {
-        public string ConnectionString { get; set; } = default!;
-        public string DatabaseName { get; set; } = default!;
+        [Required] public string ConnectionString { get; set; } = default!;
+        [Required] public string DatabaseName { get; set; } = default!;
     }
 }
