@@ -1,8 +1,10 @@
-﻿using MassTransit;
+﻿using FluentValidation;
+using MassTransit;
 using MediatR;
 using microservices.catalog.api.Repositories;
 using microservices.shared;
 using microservices.shared.Extensions;
+using microservices.shared.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
@@ -35,11 +37,24 @@ namespace microservices.catalog.api.Features.Categories.TXNS
             }
         }
 
+        //VALIDATOR
+        public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>
+        {
+            public CreateCategoryCommandValidator()
+            {
+                RuleFor(x => x.Name).NotEmpty()
+                    .WithMessage("Category name is required")
+                    .Length(4,25).WithMessage("{PropertyName} must be between 4 and 25 characters");
+            }
+        }
+
         //ENDPOINT
         public static RouteGroupBuilder CreateCategoryGroupItemEndpoint(this RouteGroupBuilder group)
         {
             group.MapPost("/", 
-                async (CreateCategoryCommand cmd, IMediator mediator) => (await mediator.Send(cmd)).ToGenericResult());
+                async (CreateCategoryCommand cmd, IMediator mediator) => (await mediator.Send(cmd))
+                .ToGenericResult())
+                .AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>();
 
             return group;
         }
