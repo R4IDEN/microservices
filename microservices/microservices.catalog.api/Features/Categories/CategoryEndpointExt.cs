@@ -8,7 +8,8 @@ namespace microservices.catalog.api.Features.Categories
         {
             app.MapGroup("api/categories")
                 .CreateCategoryGroupItemEndpoint()
-                .GetAllCategoriesGroupItemEndpoint();
+                .GetAllCategoriesGroupItemEndpoint()
+                .GetCategoryByIdGroupItemEndpoint();
         }
     }
 }

@@ -4,7 +4,6 @@ using microservices.catalog.api.Features.Categories.Dtos;
 using microservices.catalog.api.Repositories;
 using microservices.shared;
 using microservices.shared.Extensions;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 

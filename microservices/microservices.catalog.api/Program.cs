@@ -3,7 +3,6 @@ using microservices.catalog.api.Features.Categories;
 using microservices.catalog.api.Options;
 using microservices.catalog.api.Repositories;
 using microservices.shared.Extensions;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);

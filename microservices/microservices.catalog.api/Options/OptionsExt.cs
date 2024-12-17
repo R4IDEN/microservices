@@ -1,6 +1,4 @@
-﻿using microservices.catalog.api.Options;
-using Microsoft.Extensions.Options;
-using ZstdSharp.Unsafe;
+﻿using Microsoft.Extensions.Options;
 
 namespace microservices.catalog.api.Options
 {

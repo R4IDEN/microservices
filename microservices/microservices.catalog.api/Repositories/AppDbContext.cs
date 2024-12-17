@@ -2,7 +2,6 @@
 using microservices.catalog.api.Features.Courses;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
-using MongoDB.EntityFrameworkCore.Extensions;
 using System.Reflection;
 
 namespace microservices.catalog.api.Repositories
