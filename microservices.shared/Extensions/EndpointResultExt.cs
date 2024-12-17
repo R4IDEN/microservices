@@ -14,8 +14,8 @@ namespace microservices.shared.Extensions
         {
             return result.StatusCode switch
             {
-                HttpStatusCode.OK => Results.Ok(result),
-                HttpStatusCode.Created => Results.Created(result.UrlAsCreated, result),
+                HttpStatusCode.OK => Results.Ok(result.Data),
+                HttpStatusCode.Created => Results.Created(result.UrlAsCreated, result.Data),
                 HttpStatusCode.BadRequest => Results.Problem(result.Fail!),
                 HttpStatusCode.NotFound => Results.NotFound(result.Fail!),
                 _ => Results.Problem(result.Fail!)

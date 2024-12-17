@@ -16,6 +16,7 @@ namespace microservices.shared.Extensions
             services.AddHttpContextAccessor();
             services.AddMediatR(x => x.RegisterServicesFromAssemblyContaining(assembly));
             services.AddFluentValidationAutoValidation();
+            services.AddAutoMapper(assembly);
             services.AddValidatorsFromAssemblyContaining(assembly);
 
 

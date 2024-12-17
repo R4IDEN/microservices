@@ -8,9 +8,9 @@ using microservices.shared.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
-namespace microservices.catalog.api.Features.Categories.TXNS
+namespace microservices.catalog.api.Features.Categories.Operations
 {
-    public static class CreateCateogry
+    public static class CreateCateogryEndpoint
     {
         //COMMAND
         public record CreateCategoryCommand(string Name) : IRequest<ServiceResult<CreateCategoryResponse>>;
