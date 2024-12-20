@@ -1,5 +1,6 @@
 ﻿using microservices.catalog.api;
 using microservices.catalog.api.Features.Categories;
+using microservices.catalog.api.Features.Courses;
 using microservices.catalog.api.Options;
 using microservices.catalog.api.Repositories;
 using microservices.shared.Extensions;
@@ -43,7 +44,8 @@ var app = builder.Build();
 
 //category endpoint
 app.AddCategoryGroupEndpointExt();
-
+//course endpoint
+app.AddCourseGroupEndpointExt();
 
 
 //configure the HTTP request pipeline.

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using MassTransit;
 using MediatR;
 using microservices.catalog.api.Repositories;
 using microservices.shared;
@@ -40,12 +41,20 @@ namespace microservices.catalog.api.Features.Courses.Operations
 
                 //course daha önce eklenmiş mi kontrol et
                 var existingCourse = await _context.Courses.AnyAsync(x => x.Name == request.Name, cancellationToken);
-                if(!existingCourse)
+                if(existingCourse)
                     return ServiceResult<Guid>.Error("Course already exists", $"Course (name = {request.Name}) already exists", HttpStatusCode.BadRequest);
 
                 //course ekleme işlemi
                 var course = _mapper.Map<Course>(request);
                 course.CreatedAt = DateTime.Now;
+                course.Id = NewId.NextSequentialGuid();
+                course.Feature = new Feature()
+                {
+                    Duration = 10,
+                    Rating = 45,
+                    TeacherName = "sarı çizmeli aga"
+                };
+                
                 _context.Courses.Add(course);
                 await _context.SaveChangesAsync(cancellationToken);
 

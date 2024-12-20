@@ -1,4 +1,5 @@
 ﻿using microservices.catalog.api.Features.Categories;
+using microservices.catalog.api.Features.Categories.Dtos;
 using microservices.catalog.api.Repositories;
 
 namespace microservices.catalog.api.Features.Courses

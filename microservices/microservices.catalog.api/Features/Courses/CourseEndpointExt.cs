@@ -8,7 +8,12 @@ namespace microservices.catalog.api.Features.Courses
         public static void AddCourseGroupEndpointExt(this WebApplication app)
         {
             app.MapGroup("api/courses")
-                .CreateCourseGroupItemEndpoint();
+                .WithTags("Courses")
+                .CreateCourseGroupItemEndpoint()
+                .GetAllCoursesGroupItemEndpoint()
+                .GetCourseByIdGroupItemEndpoint()
+                .UpdateCourseGroupItemEndpoint()
+                .DeleteCourseGroupItemEndpoint();
         }
     }
 }
