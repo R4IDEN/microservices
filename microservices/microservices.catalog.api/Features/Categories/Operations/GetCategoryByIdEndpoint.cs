@@ -33,7 +33,8 @@ namespace microservices.catalog.api.Features.Categories.Operations
         {
             group.MapGet("/{id:guid}",
                 async (IMediator mediator, Guid id) => (await mediator.Send(new GetCategoryByIdQuery(id)))
-                .ToGenericResult());
+                .ToGenericResult())
+                .MapToApiVersion(1, 0); ;
             return group;
         }
     }  

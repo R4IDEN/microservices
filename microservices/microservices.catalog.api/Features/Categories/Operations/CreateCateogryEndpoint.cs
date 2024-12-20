@@ -54,6 +54,7 @@ namespace microservices.catalog.api.Features.Categories.Operations
             group.MapPost("/", 
                 async (CreateCategoryCommand cmd, IMediator mediator) => (await mediator.Send(cmd))
                 .ToGenericResult())
+                .MapToApiVersion(1,0)
                 .AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>();
 
             return group;

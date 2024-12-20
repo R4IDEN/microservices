@@ -54,6 +54,7 @@ namespace microservices.catalog.api.Features.Courses.Operations
             group.MapPut("/",
                 async (UpdateCourseCommand cmd, IMediator mediator) => (await mediator.Send(cmd))
                 .ToGenericResult())
+                .MapToApiVersion(1, 0)
                 .AddEndpointFilter<ValidationFilter<UpdateCourseCommand>>();
 
             return group;

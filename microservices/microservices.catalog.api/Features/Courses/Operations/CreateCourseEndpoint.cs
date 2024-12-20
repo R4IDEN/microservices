@@ -69,6 +69,7 @@ namespace microservices.catalog.api.Features.Courses.Operations
             group.MapPost("/",
                 async (CreateCourseCommand cmd, IMediator mediator) => (await mediator.Send(cmd))
                 .ToGenericResult())
+                .MapToApiVersion(1, 0)
                 .AddEndpointFilter<ValidationFilter<CreateCourseCommand>>();
             
             return group;

@@ -34,7 +34,8 @@ builder.Services.AddScoped<AppDbContext>(sp =>
 
 //common service extension
 builder.Services.AddCommonServiceExt(typeof(CatalogAssembly));
-
+//version extension
+builder.Services.AddVersioningExt();
 
 
 
@@ -43,9 +44,9 @@ builder.Services.AddCommonServiceExt(typeof(CatalogAssembly));
 var app = builder.Build();
 
 //category endpoint
-app.AddCategoryGroupEndpointExt();
+app.AddCategoryGroupEndpointExt(app.AddVersionSetExt());
 //course endpoint
-app.AddCourseGroupEndpointExt();
+app.AddCourseGroupEndpointExt(app.AddVersionSetExt());
 
 
 //configure the HTTP request pipeline.
