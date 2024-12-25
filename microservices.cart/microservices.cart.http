@@ -1,0 +1,6 @@
+@microservices.cart_HostAddress = http://localhost:5072
+
+GET {{microservices.cart_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

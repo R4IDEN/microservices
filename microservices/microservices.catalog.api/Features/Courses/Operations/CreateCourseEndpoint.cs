@@ -8,7 +8,6 @@ using microservices.shared.Extensions;
 using microservices.shared.Filters;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
-using static microservices.catalog.api.Features.Categories.Operations.CreateCateogryEndpoint;
 
 namespace microservices.catalog.api.Features.Courses.Operations
 {

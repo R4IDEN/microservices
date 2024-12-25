@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{0FB6F2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microservices.shared", "..\microservices.shared\microservices.shared.csproj", "{9EF46DFB-0660-445B-9D69-505D3569546E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cart", "cart", "{CB9DF8D7-C5F7-4FBD-8C20-FC91C7969A0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microservices.cart.api", "..\microservices.cart\microservices.cart.api.csproj", "{D28F4B9D-7DBB-4894-B0C6-433CC7E329DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,10 @@ Global
 		{9EF46DFB-0660-445B-9D69-505D3569546E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9EF46DFB-0660-445B-9D69-505D3569546E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9EF46DFB-0660-445B-9D69-505D3569546E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D28F4B9D-7DBB-4894-B0C6-433CC7E329DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D28F4B9D-7DBB-4894-B0C6-433CC7E329DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D28F4B9D-7DBB-4894-B0C6-433CC7E329DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D28F4B9D-7DBB-4894-B0C6-433CC7E329DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,5 +53,7 @@ Global
 		{18552A21-D9A7-458C-922D-8395E4775746} = {CB49811B-D04B-40DD-9CE9-34ADD8E24C0D}
 		{0FB6F24D-49AA-4B75-8DB1-0DAE7BE3C842} = {9B9C6B5E-AE49-41A9-AFAF-1FC9F5E64EEF}
 		{9EF46DFB-0660-445B-9D69-505D3569546E} = {0FB6F24D-49AA-4B75-8DB1-0DAE7BE3C842}
+		{CB9DF8D7-C5F7-4FBD-8C20-FC91C7969A0F} = {182F198C-099E-451A-8FFD-831FA9592CBF}
+		{D28F4B9D-7DBB-4894-B0C6-433CC7E329DE} = {CB9DF8D7-C5F7-4FBD-8C20-FC91C7969A0F}
 	EndGlobalSection
 EndGlobal

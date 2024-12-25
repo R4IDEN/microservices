@@ -1,5 +1,4 @@
 ﻿using Asp.Versioning.Builder;
-using microservices.catalog.api.Features.Categories.Operations;
 using microservices.catalog.api.Features.Courses.Operations;
 
 namespace microservices.catalog.api.Features.Courses
