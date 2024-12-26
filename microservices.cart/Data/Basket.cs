@@ -1,4 +1,6 @@
-﻿namespace microservices.cart.api.Data
+﻿using System.Text.Json.Serialization;
+
+namespace microservices.cart.api.Data
 {
     public class Basket
     {
@@ -19,16 +21,28 @@
         }
 
         //computed properties
-        public bool isApplyDiscount => discountRate is > 0 && !string.IsNullOrEmpty(coupon);
+        [JsonIgnore] public bool isApplyDiscount => discountRate is > 0 && !string.IsNullOrEmpty(coupon);
 
-        public decimal TotalPrice => basketItems.Sum(x => x.price);
+        [JsonIgnore] public decimal TotalPrice => basketItems.Sum(x => x.price);
 
-        public decimal? TotalPriceWithAppliedDiscount => isApplyDiscount ? basketItems.Sum(x => x.discountAppliedPrice) : TotalPrice;
+        [JsonIgnore] public decimal? TotalPriceWithAppliedDiscount => isApplyDiscount ? basketItems.Sum(x => x.discountAppliedPrice) : TotalPrice;
 
         public void ApplyDiscount(string Coupon, float DiscountRate)
         {
             coupon = Coupon;
             discountRate = DiscountRate;
+
+            //tüm ürünlerin fiyatlarını güncelle
+            foreach (var item in basketItems)
+            {
+                item.discountAppliedPrice = item.price - (item.price * (decimal)discountRate.Value);
+            }
+        }
+
+        public void ApplyAvailableDiscount()
+        {
+            if (discountRate is null || string.IsNullOrEmpty(coupon))
+                return;
 
             //tüm ürünlerin fiyatlarını güncelle
             foreach (var item in basketItems)

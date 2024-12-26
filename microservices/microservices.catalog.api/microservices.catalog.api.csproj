@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\microservices.cart\microservices.cart.api.csproj" />
     <ProjectReference Include="..\..\microservices.shared\microservices.shared.csproj" />
   </ItemGroup>
 

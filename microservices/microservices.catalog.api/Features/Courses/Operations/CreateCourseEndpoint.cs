@@ -65,7 +65,7 @@ namespace microservices.catalog.api.Features.Courses.Operations
         //ENDPOINT
         public static RouteGroupBuilder CreateCourseGroupItemEndpoint(this RouteGroupBuilder group)
         {
-            group.MapPost("/",
+            group.MapPut("/",
                 async (CreateCourseCommand cmd, IMediator mediator) => (await mediator.Send(cmd))
                 .ToGenericResult())
                 .MapToApiVersion(1, 0)

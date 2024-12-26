@@ -4,12 +4,10 @@ namespace microservices.cart.api.Dtos
 {
     public record BasketDto
     {
-        [JsonIgnore] public Guid userId { get; init; }
         public List<BasketItemDto> basketItems { get; set; } = new();
 
-        public BasketDto(Guid UserId, List<BasketItemDto> BasketItems)
+        public BasketDto(List<BasketItemDto> BasketItems)
         {
-            userId = UserId;
             basketItems = BasketItems;
         }
 

@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning.Builder;
 using microservices.cart.api.Features.Cart.Operations;
+using microservices.catalog.api.Features.Courses.Operations;
 
 namespace microservices.cart.api.Features
 {
@@ -12,7 +13,8 @@ namespace microservices.cart.api.Features
                 .WithApiVersionSet(apiVersionSet)
                 .CartAddItemGroupItemEndpoint()
                 .CartDeleteItemGroupItemEndpoint()
-                .CartGetCartGroupItemEndpoint();
+                .CartGetCartGroupItemEndpoint()
+                .RemoveDiscountCouponGroupItemEndpoint();
         }
     }
 }

@@ -70,6 +70,8 @@ namespace microservices.cart.api.Features.Cart.Operations
                         currentBasket.basketItems.Remove(existingCartItem);
 
                     currentBasket.basketItems.Add(cartItem);
+
+                    currentBasket.ApplyAvailableDiscount();
                 }
 
                 basketAsStr = JsonSerializer.Serialize(currentBasket);
