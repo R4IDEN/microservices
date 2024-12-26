@@ -8,6 +8,7 @@ using microservices.shared.Extensions;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Net;
 using System.Text.Json;
+using microservices.shared.Services;
 
 namespace microservices.cart.api.Features.Cart
 {
@@ -33,12 +34,12 @@ namespace microservices.cart.api.Features.Cart
         }
 
         //HANDLER
-        public class CartAddItemHandler(IDistributedCache _cache) : IRequestHandler<CartAddItemCommand, ServiceResult>
+        public class CartAddItemHandler(IDistributedCache _cache, IIdentityService _identityService) : IRequestHandler<CartAddItemCommand, ServiceResult>
         {
             public async Task<ServiceResult> Handle(CartAddItemCommand request, CancellationToken cancellationToken)
             {
                 //To do : Buradaki userId'yi nasıl alacağız?
-                Guid userId = Guid.Parse("a2a84ffc-e498-4f12-83d2-26774a65071e");
+                Guid userId = _identityService.GetUserId;
                 var cacheKey = string.Format(BasketConst.BasketCacheKey, userId);
 
                 var basketAsStr = await _cache.GetStringAsync(cacheKey);

@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning.Builder;
 using microservices.cart.api.Features.Cart;
+using microservices.cart.api.Features.Cart.Operations;
 
 namespace microservices.cart.api.Features
 {
@@ -10,7 +11,8 @@ namespace microservices.cart.api.Features
             app.MapGroup("api/v{version:apiVersion}/cart")
                 .WithTags("Cart")
                 .WithApiVersionSet(apiVersionSet)
-                .CartAddItemGroupItemEndpoint();
+                .CartAddItemGroupItemEndpoint()
+                .CartDeleteItemGroupItemEndpoint();
         }
     }
 }
