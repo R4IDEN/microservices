@@ -12,7 +12,8 @@ namespace microservices.cart.api.Features
                 .WithTags("Cart")
                 .WithApiVersionSet(apiVersionSet)
                 .CartAddItemGroupItemEndpoint()
-                .CartDeleteItemGroupItemEndpoint();
+                .CartDeleteItemGroupItemEndpoint()
+                .CartGetCartGroupItemEndpoint();
         }
     }
 }

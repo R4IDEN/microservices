@@ -30,6 +30,7 @@ namespace microservices.cart.api.Features.Cart.Operations
                     return ServiceResult.Error("Cart not found", HttpStatusCode.NotFound);
 
                 var currentBasket = JsonSerializer.Deserialize<BasketDto>(basketAsStr);
+                
                 var existingItem = currentBasket.basketItems.FirstOrDefault(x => x.courseId == request.Id);
 
                 if (existingItem is null)
