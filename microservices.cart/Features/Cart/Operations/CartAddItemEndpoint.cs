@@ -9,8 +9,9 @@ using Microsoft.Extensions.Caching.Distributed;
 using System.Net;
 using System.Text.Json;
 using microservices.shared.Services;
+using microservices.cart.api.Data;
 
-namespace microservices.cart.api.Features.Cart
+namespace microservices.cart.api.Features.Cart.Operations
 {
     public static class CartAddItemEndpoint
     {
@@ -43,21 +44,21 @@ namespace microservices.cart.api.Features.Cart
                 var cacheKey = string.Format(BasketConst.BasketCacheKey, userId);
 
                 var basketAsStr = await _cache.GetStringAsync(cacheKey);
-                BasketDto? currentBasket;
+                Basket? currentBasket;
 
-                var cartItem = new BasketItemDto(
-                    request.CourseId,
-                    request.CourseName,
-                    request.CourseImageUrl,
-                    request.CoursePrice,
-                    null);
+                var cartItem = new BasketItem(
+                    null, 
+                    request.CoursePrice, 
+                    request.CourseImageUrl, 
+                    request.CourseName, 
+                    request.CourseId);
 
                 if (string.IsNullOrEmpty(basketAsStr))
-                    currentBasket = new BasketDto(userId, [cartItem]);
+                    currentBasket = new Basket(userId, [cartItem]);
 
                 else
                 {
-                    currentBasket = JsonSerializer.Deserialize<BasketDto>(basketAsStr);
+                    currentBasket = JsonSerializer.Deserialize<Basket>(basketAsStr);
 
                     if (currentBasket is null)
                         return ServiceResult.Error("An error occured while deserializing cart", HttpStatusCode.InternalServerError);

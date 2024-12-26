@@ -8,7 +8,8 @@ using System.Net;
 using System.Text.Json;
 using microservices.shared.Extensions;
 using microservices.shared.Filters;
-using static microservices.cart.api.Features.Cart.CartAddItemEndpoint;
+using static microservices.cart.api.Features.Cart.Operations.CartAddItemEndpoint;
+using microservices.cart.api.Data;
 
 namespace microservices.cart.api.Features.Cart.Operations
 {
@@ -24,15 +25,16 @@ namespace microservices.cart.api.Features.Cart.Operations
             {
                 Guid userId = _identityService.GetUserId;
                 var cacheKey = string.Format(BasketConst.BasketCacheKey, userId);
-                
+
                 var basketAsStr = await _cache.GetStringAsync(cacheKey, cancellationToken);
                 if (string.IsNullOrEmpty(basketAsStr))
                     return ServiceResult.Error("Cart not found", HttpStatusCode.NotFound);
 
-                var currentBasket = JsonSerializer.Deserialize<BasketDto>(basketAsStr);
-                
-                var existingItem = currentBasket.basketItems.FirstOrDefault(x => x.courseId == request.Id);
+                var currentBasket = JsonSerializer.Deserialize<Basket>(basketAsStr);
+                if(currentBasket is null)
+                    return ServiceResult.Error("Cart is empty", HttpStatusCode.NotFound);
 
+                var existingItem = currentBasket.basketItems.FirstOrDefault(x => x.courseId == request.Id);
                 if (existingItem is null)
                     return ServiceResult.Error("Cart item not found", HttpStatusCode.NotFound);
 

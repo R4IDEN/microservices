@@ -1,5 +1,4 @@
 ﻿using Asp.Versioning.Builder;
-using microservices.cart.api.Features.Cart;
 using microservices.cart.api.Features.Cart.Operations;
 
 namespace microservices.cart.api.Features
